@@ -1,4 +1,5 @@
 # 项目时间：2022/3/11 10:15
+import os
 filename='student.txt'
 def main():
     while True:
@@ -80,9 +81,37 @@ def search():
 
 
 def delete():
-    pass
-
-
+    while True:
+        student_id=input('请输入要删除的学生ID：')
+        if student_id!='':
+            if os.path.exists(filename):
+                with open(filename,'r',encoding='utf-8') as file:
+                    student_old=file.readlines()
+            else:
+                student_old=[]
+            flag=False
+            if student_old:
+                with open(filename,'w',encoding='utf-8') as wfile:
+                    d={}
+                    for item in student_old:
+                        d=dict(eval(item))
+                        if d['id']!=student_id:
+                            wfile.write(str(d)+'\n')
+                        else:
+                            flag=True
+                    if flag:
+                        print(f'ID为{student_old}的学生信息已经被删除')
+                    else:
+                        print(f'没有找到ID为{student_id}的学生信息')
+            else:
+                print('无学生信息')
+                break
+            show()
+            answer=input('是否继续删除？Y/N')
+            if answer=='y'or answer=='Y':
+                continue
+            else:
+                break
 def modify():
     pass
 
